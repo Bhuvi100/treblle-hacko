@@ -15,7 +15,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware(['treblle'])->group(function () {
-    Route::prefix('v2')->group(function () {
+    Route::prefix('v1')->group(function () {
+
+        Route::get('/ping', function () {
+            return response('pong', 200);
+        });
 
         Route::post('/auth/register',[\App\Http\Controllers\v1\AuthController::class, 'register']);
         Route::post('/auth/login',[\App\Http\Controllers\v1\AuthController::class, 'login']);
