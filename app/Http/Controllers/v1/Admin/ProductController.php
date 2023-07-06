@@ -1,0 +1,50 @@
+<?php
+
+namespace App\Http\Controllers\v1\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\ProductRequest;
+use App\Http\Resources\ProductResource;
+use App\Models\Product;
+
+class ProductController extends Controller
+{
+    public function index()
+    {
+        $this->authorize('viewAny',Product::class);
+
+        return ProductResource::collection(Product::all());
+    }
+
+    public function store(ProductRequest $request)
+    {
+        $this->authorize('create',Product::class);
+
+        return new ProductResource(Product::create($request->validated() + ['user_id' => auth()->id()]));
+    }
+
+    public function show(Product $product)
+    {
+        $this->authorize('view', $product);
+
+        return new ProductResource($product);
+    }
+
+    public function update(ProductRequest $request,Product $product)
+    {
+        $this->authorize('update', $product);
+
+        $product->update($request->validated());
+
+        return new ProductResource($product);
+    }
+
+    public function destroy(Product $product)
+    {
+        $this->authorize('delete', $product);
+
+        $product->delete();
+
+        return response()->json();
+    }
+}

@@ -27,6 +27,9 @@ Route::middleware(['treblle'])->group(function () {
         Route::get('/auth/email/verify/{id}/{hash}',[\App\Http\Controllers\v1\AuthController::class, 'verifyEmail'])
             ->middleware([])->name('verification.verify');
 
+        Route::resource('/products', \App\Http\Controllers\v1\ProductController::class)->only(['index', 'show']);
+
+
         Route::middleware('auth:sanctum')->group(function () {
             Route::post('/auth/email/send',[\App\Http\Controllers\v1\AuthController::class, 'sendVerificationEmail']);
 
@@ -39,6 +42,8 @@ Route::middleware(['treblle'])->group(function () {
 
             Route::middleware(['auth:sanctum', 'admin'])->group(function () {
                 Route::get('/user', [\App\Http\Controllers\v1\Admin\UserController::class, 'show']);
+
+                Route::resource('/products', \App\Http\Controllers\v1\Admin\ProductController::class);
             });
         });
     });
