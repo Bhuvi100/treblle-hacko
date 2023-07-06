@@ -34,7 +34,7 @@ Install project dependencies using Composer.
 composer install
 ```
 
-Copy the .env.example file and rename it to .env and configure the .env file.
+Copy the .env.example file and rename it to .env and configure .env file.
 ```bash
 cp .env.example .env
 ```
