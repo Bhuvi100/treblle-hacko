@@ -28,7 +28,7 @@ class ProductController extends Controller
             $validated['image'] = \Str::replace('public/', '', $request->file('image')->store('public/images/products'));
         }
 
-        return new ProductResource(Product::create());
+        return new ProductResource(Product::create($validated));
     }
 
     public function show(Product $product)
@@ -54,7 +54,7 @@ class ProductController extends Controller
             $validated['image'] = \Str::replace('public/', '', $request->file('image')->store('public/images/products'));
         }
 
-        $product->update($request->validated());
+        $product->update($validated);
 
         return new ProductResource($product);
     }
