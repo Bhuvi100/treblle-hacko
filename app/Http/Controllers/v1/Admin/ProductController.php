@@ -20,7 +20,15 @@ class ProductController extends Controller
     {
         $this->authorize('create',Product::class);
 
-        return new ProductResource(Product::create($request->validated() + ['user_id' => auth()->id()]));
+        $validated = $request->validated();
+
+        $validated['user_id'] = auth()->id();
+
+        if ($request->hasFile('image')) {
+            $validated['image'] = \Str::replace('public/', '', $request->file('image')->store('public/images/products'));
+        }
+
+        return new ProductResource(Product::create());
     }
 
     public function show(Product $product)
@@ -33,6 +41,18 @@ class ProductController extends Controller
     public function update(ProductRequest $request,Product $product)
     {
         $this->authorize('update', $product);
+
+        $validated = $request->validated();
+
+        if ($request->hasFile('image')) {
+            if ($product->image) {
+                if (\Storage::exists('public/' . $product->image)) {
+                    \Storage::delete('public/' . $product->image);
+                }
+            }
+
+            $validated['image'] = \Str::replace('public/', '', $request->file('image')->store('public/images/products'));
+        }
 
         $product->update($request->validated());
 
