@@ -1,66 +1,190 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+# API Security Hackathon by Treblle
+## Introduction
+This project is submitted to [API Security hackthon 2K23](https://blog.treblle.com/api-security-hackathon/) conducted by [trebble](https://www.treblle.com/)
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Deployment
 
-## Learning Laravel
+### Prerequisites
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- PHP (version >= 8.1)
+- Composer (https://getcomposer.org/)
+- Laravel (https://laravel.com/)
+- MySQL (or any other supported database)
+- Git
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Installation
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Clone the project repository from GitHub (or extract the project files if you have a zip archive).
 
-## Laravel Sponsors
+```bash
+git clone https://github.com/Bhuvi100/treblle-hacko.git
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Navigate to the project directory.
+```bash
+cd trebble-hacko
+```
 
-### Premium Partners
+Install project dependencies using Composer.
+```bash
+composer install
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+Copy the .env.example file and rename it to .env and configure the .env file.
+```bash
+cp .env.example .env
+```
 
-## Contributing
+Generate the application key.
+```bash
+php artisan key:generate
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Run the database migrations.
+```bash
+php artisan migrate
+```
 
-## Code of Conduct
+Start the local development server.
+```bash
+php artisan serve
+```
+Server will be started on :
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```sh
+localhost:8000
+```
 
-## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## API Reference
+#### Customer login
+```http
+POST api/v1/auth/login
+```
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `name` | `string` | Name of the user |
+| `email` | `string` | Email id of the user  |
+| `password` | `string` | password for the email handel  |
+| `password_confirmation` | `string` | Retyped password |
+
+`Response`
+| Status Code | Structure | Example |
+| ---------- |--------- | ------ |
+| 200 | { <br> status: string , <br> token: string, <br> user: <br> user object <br>} | {<br>status: "success",<br>token: "3\|TNc0pHeT9AdQjlTjHiRBKy7ksxqFFV2lCaahuC6T",<br>user: {<br> id: 2, <br>name: "user-1",<br>email: "test1@2test.com",<br>email_verified_at: null,<br>created_at: "2023-07-06T09:55:38.000000Z",<br>updated_at: "2023-07-06T09:55:38.000000Z"<br>}<br>} |
+
+#### Admin login
+```http
+POST api/v1/admin/auth/login
+```
+| Parameter                | Type     | Description                    |
+| :----------------------- | :------- | :----------------------------- |
+| `name`                   | `string` | Name of the admin              |
+| `email`                  | `string` | Email ID of the admin          |
+| `password`               | `string` | Password for the admin         |
+| `password_confirmation`  | `string` | Retyped password               |
+
+`Response`
+| Status Code | Structure                    | Example             |
+| ----------- | ------------- | ------------------- |
+| 200         | {<br>status: string,<br>token: string,<br>user: user object<br>}                                      | {<br>status: "success",<br>token: "6\|q9ZORbMOAxiTnQC2ebw82hco336kHl4xaZhy5vKJ",<br>user: {<br>&nbsp;&nbsp;&nbsp;&nbsp;id: 1,<br>&nbsp;&nbsp;&nbsp;&nbsp;name: "user-1",<br>&nbsp;&nbsp;&nbsp;&nbsp;email: "test1@test.com",<br>&nbsp;&nbsp;&nbsp;&nbsp;email_verified_at: null,<br>&nbsp;&nbsp;&nbsp;&nbsp;created_at: "2023-07-06T09:45:39.000000Z",<br>&nbsp;&nbsp;&nbsp;&nbsp;updated_at: "2023-07-06T09:45:39.000000Z"<br>}<br>} |
+
+
+#### Customer registration
+
+```http
+POST api/v1/auth/register
+```
+
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `name` | `string` | Name of the user |
+| `email` | `string` | Email id of the user  |
+| `password` | `string` | password for the email handel  |
+| `password_confirmation` | `string` | Retyped password |
+
+`Response`
+| Status Code | Structure        | Example      |
+| ----------- | ------- | ---------------------- |
+| 200         | {<br>status: string,<br>token: string,<br>user: user object<br>} | {<br>status: "success",<br>token: "2\|QwAyRpsnIJCO5FqrVWIVh6YVkg <br>} |
+
+#### Customer account
+
+```http
+GET api/v1/user
+```
+| Auth | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `Auth Key` | Bearer Token | Response of token that is returned by login |
+
+`Response`
+| Status Code | Structure | Example |
+| ---------- |--------- | ------ |
+| 200 | { <br> data: <br> "user object" <br>} | { <br>data: { <br>id: 1, <br>name: "user-1",<br>email: "test1@test.com",<br>email_verified_at: null,<br>created_at: "2023-07-06T09:45:39.000000Z",<br>updated_at: "2023-07-06T09:45:39.000000Z",<br>is_admin: 0<br>}<br>} |
+
+
+#### Admin Account
+
+```http
+GET api/v1/admin/user
+```
+
+
+| Auth | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `Auth Key` | Bearer Token | Response of token that is returned by login |
+
+`Response`
+| Status Code | Structure | Example |
+| ---------- |--------- | ------ |
+| 200 | { <br> data: <br> "user object" <br>} | { <br>data: { <br>id: 1, <br>name: "user-1",<br>email: "test1@test.com",<br>email_verified_at: null,<br>created_at: "2023-07-06T09:45:39.000000Z",<br>updated_at: "2023-07-06T09:45:39.000000Z",<br>is_admin: 1<br>}<br>} |
+
+
+
+#### verification email
+
+```http
+POST api/v1/auth/email/send
+```
+
+| Parameter | Type     | Description                |
+| :-------- | :------- | :------------------------- |
+| `name` | `string` | Name of the user |
+| `email` | `string` | Email id of the user  |
+| `password` | `string` | password for the email handel  |
+| `password_confirmation` | `string` | Retyped password |
+
+`Response`
+| Status Code | Structure                            | Example               |
+| ----------- | ------------------------------------ | --------------------- |
+| 200         | {<br>status: string<br>}             | {<br>status: "success"<br>} |
+
+#### verify email
+
+```http
+GET api/v1/auth/email/verify/{id}/{identifier}
+```
+| Parameter   | Type     | Description            |
+| :---------- | :------- | :--------------------- |
+| `expires`   | `string` | Expiration timestamp   |
+| `signature` | `string` | Signature for validation |
+
+`Response`
+| Status Code | Structure      | Example         |
+| ----------- | ------------- | ----------------- |
+| 200         | {<br>expires: string,<br>signature: string<br>}                | {<br>expires: "1688641679",<br>signature: "8cc2ea92eab079f0a71ece264389cf57f1c7ae96eb527d2939d3d36224609733"<br>} |
+
+## Authors
+
+- [Bhuvanesh](https://www.github.com/bhuvi100)
+- [Ashwin Biju](https://www.github.com/ashwinbiju09)
+- [Dhivakaran](https://www.github.com/ultralegendary)
+
+
