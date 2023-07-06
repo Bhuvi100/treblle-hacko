@@ -13,7 +13,7 @@ return new class extends Migration {
             $table->text('description');
             $table->string('image')->nullable();
             $table->unsignedInteger('price');
-            $table->foreignId('user_id');
+            $table->foreignUuid('user_id');
             $table->timestamps();
         });
     }
